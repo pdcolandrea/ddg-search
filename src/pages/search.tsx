@@ -54,7 +54,7 @@ export default function SearchPage() {
             </h1>
             <p className='text-greyish'>
               Add DuckDuckGo Privacy Essentials to your browser for free with
-              one download
+              one download:
             </p>
 
             <div className='flex w-1/2 justify-around'>
