@@ -1,19 +1,26 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+const wait = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('woot');
+    }, 5000);
+  });
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { user } = req.query;
 
   console.log(user);
 
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(
-        res
-          .setHeader('Cache-Control', 's-maxage=20')
-          .setHeader('Cache-Control', 'max-age=99')
-          .status(200)
-          .send(`hello ${user}`)
-      );
-    }, 5000);
-  });
+  await wait();
+
+  return res
+    .setHeader('Cache-Control', 's-maxage=')
+    .setHeader('Cache-Control', 'maxage-99')
+    .status(200)
+    .send(`hello ${user}`);
 }
