@@ -22,7 +22,7 @@ export const SearchIcon = () => (
     viewBox='0 0 24 24'
     strokeWidth={1.5}
     stroke='#A6A6A6'
-    className='h-6 w-6 group-hover:stroke-mainbg'
+    className='h-6 w-6 transition group-hover:stroke-mainbg '
   >
     <path
       strokeLinecap='round'

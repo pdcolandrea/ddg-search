@@ -7,7 +7,6 @@ import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
 import Logo from '~/images/whale-logo.png';
@@ -17,6 +16,14 @@ export default function SearchPage() {
 
   const onQueryEntered = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+  };
+
+  const onSearchIconClicked = () => {
+    console.log('searching for ', searchQuery);
+  };
+
+  const onCloseIconClicked = () => {
+    setSearchQuery('');
   };
 
   return (
@@ -39,18 +46,24 @@ export default function SearchPage() {
               />
 
               {searchQuery.length >= 1 && (
-                <div className='absolute right-10  flex h-full w-14 items-center justify-center'>
+                <div
+                  onClick={onCloseIconClicked}
+                  className='absolute right-10  flex h-full w-14 items-center justify-center'
+                >
                   <CloseIcon />
                 </div>
               )}
 
-              <div className='group absolute right-0 flex h-full w-12 items-center justify-center rounded-tl-sm rounded-bl-sm hover:bg-hover '>
+              <div
+                onClick={onSearchIconClicked}
+                className='group absolute right-0 flex h-full w-12 items-center justify-center rounded-tl-sm rounded-bl-sm transition hover:bg-hover'
+              >
                 <SearchIcon />
               </div>
             </div>
 
             <h1 className='mt-4 h-12 text-greyish'>
-              Tired of being tracked online?
+              Tired of following fake trading gurus?
             </h1>
             <p className='text-greyish'>
               Add DuckDuckGo Privacy Essentials to your browser for free with
@@ -61,28 +74,26 @@ export default function SearchPage() {
               <div className='flex flex-row items-center'>
                 <CheckIcon />
                 <p className='ml-2 font-semibold text-greyish'>
-                  DuckDuckGo Search
+                  Historical Trades
                 </p>
               </div>
 
               <div className='flex flex-row items-center'>
                 <CheckIcon />
                 <p className='ml-2 font-semibold text-greyish'>
-                  Site Encryption
+                  Individual Trade Evaluation
                 </p>
               </div>
 
               <div className='flex flex-row items-center'>
                 <CheckIcon />
-                <p className='ml-2 font-semibold text-greyish'>
-                  Tracker Blocking
-                </p>
+                <p className='ml-2 font-semibold text-greyish'>WhaleRating</p>
               </div>
             </div>
 
             <p className='mt-4 text-sm text-gray-700'>
               <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-                See the repository
+                View this months top traders
               </ArrowLink>
             </p>
 
@@ -90,23 +101,10 @@ export default function SearchPage() {
               See all components
             </ButtonLink>
 
-            <UnstyledLink
-              href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-              className='mt-4'
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                width='92'
-                height='32'
-                src='https://vercel.com/button'
-                alt='Deploy with Vercel'
-              />
-            </UnstyledLink>
-
             <footer className='absolute bottom-2 text-gray-700'>
               © {new Date().getFullYear()} By{' '}
-              <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-                Theodorus Clarence
+              <UnderlineLink href='https://github.com/pdcolandrea'>
+                pdcolandrea
               </UnderlineLink>
             </footer>
           </div>
