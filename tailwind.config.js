@@ -16,6 +16,7 @@ module.exports = {
         alt: '#282828',
         greyish: '#eeeeee',
         hover: '#999999',
+        icons: '#A6A6A6',
         primary: {
           // Customize it on globals.css :root
           50: 'rgb(var(--tw-color-primary-50) / <alpha-value>)',

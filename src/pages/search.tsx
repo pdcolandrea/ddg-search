@@ -1,6 +1,8 @@
+import Image from 'next/image';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 
+import { CheckIcon, CloseIcon, SearchIcon } from '@/components/icons/HeroIcons';
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
@@ -8,7 +10,7 @@ import UnderlineLink from '@/components/links/UnderlineLink';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
-import Vercel from '~/svg/Vercel.svg';
+import Logo from '~/images/whale-logo.png';
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -25,8 +27,8 @@ export default function SearchPage() {
       <main>
         <section className='bg-mainbg'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
-            <Vercel className='text-5xl' />
-            <h1 className='mb-4'>DuckDuckGo</h1>
+            <Image src={Logo} alt='WhaleWar Logo' width={150} height={150} />
+            <h1 className='mb-4 font-light text-white'>WhaleWar</h1>
 
             <div className=' relative flex w-1/2 rounded-lg bg-altbg'>
               <input
@@ -37,17 +39,47 @@ export default function SearchPage() {
               />
 
               {searchQuery.length >= 1 && (
-                <div className='absolute right-12  flex h-full w-14 '>
-                  <span className='m-auto text-center align-middle font-bold text-white'>
-                    X
-                  </span>
+                <div className='absolute right-10  flex h-full w-14 items-center justify-center'>
+                  <CloseIcon />
                 </div>
               )}
 
-              <div className='absolute right-0 h-full w-12 rounded-tl-sm rounded-bl-sm hover:bg-hover '>
-                <span className='text-slate-200'>S</span>
+              <div className='group absolute right-0 flex h-full w-12 items-center justify-center rounded-tl-sm rounded-bl-sm hover:bg-hover '>
+                <SearchIcon />
               </div>
             </div>
+
+            <h1 className='mt-4 h-12 text-greyish'>
+              Tired of being tracked online?
+            </h1>
+            <p className='text-greyish'>
+              Add DuckDuckGo Privacy Essentials to your browser for free with
+              one download
+            </p>
+
+            <div className='flex w-1/2 justify-around'>
+              <div className='flex flex-row items-center'>
+                <CheckIcon />
+                <p className='ml-2 font-semibold text-greyish'>
+                  DuckDuckGo Search
+                </p>
+              </div>
+
+              <div className='flex flex-row items-center'>
+                <CheckIcon />
+                <p className='ml-2 font-semibold text-greyish'>
+                  Site Encryption
+                </p>
+              </div>
+
+              <div className='flex flex-row items-center'>
+                <CheckIcon />
+                <p className='ml-2 font-semibold text-greyish'>
+                  Tracker Blocking
+                </p>
+              </div>
+            </div>
+
             <p className='mt-4 text-sm text-gray-700'>
               <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
                 See the repository
