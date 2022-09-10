@@ -13,6 +13,10 @@ module.exports = {
   //   ],
   // },
 
+  async headers() {
+    return [];
+  },
+
   // SVGR
   webpack(config) {
     config.module.rules.push({

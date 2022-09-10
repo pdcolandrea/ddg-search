@@ -1,9 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+let count = 0;
 const wait = async () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('woot');
+      count += 1;
+      resolve(`woot ${count}`);
     }, 5000);
   });
 };
@@ -12,15 +14,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate');
   const { user } = req.query;
 
   console.log(user);
 
-  await wait();
+  const testing = await wait();
 
-  return res
-    .setHeader('Cache-Control', 's-maxage=')
-    .setHeader('Cache-Control', 'maxage-99')
-    .status(200)
-    .send(`hello ${user}`);
+  return res.status(200).send(`hello ${user} ${testing}`);
 }
