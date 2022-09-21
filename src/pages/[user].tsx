@@ -38,7 +38,6 @@ export default function User() {
     () => getUser(username),
     {
       enabled: username.length > 0,
-      staleTime: Infinity,
     }
   );
 

@@ -28,8 +28,7 @@ export default function SearchPage() {
 
   return (
     <Layout>
-      {/* <Seo templateTitle='Home' /> */}
-      <Seo />
+      <Seo templateTitle='Search' />
 
       <main>
         <section className='bg-mainbg'>

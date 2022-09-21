@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model post {
+  id            Int            @id @default(autoincrement()) @db.UnsignedInt
+  created_at    DateTime       @default(now()) @db.Timestamp(0)
+  slug          String         @db.VarChar(255)
+  user_id       Int
+  current_price Float          @db.Float
+  pair          String         @db.VarChar(12)
+  sentiment     post_sentiment
+  d1_price      Float?         @db.Float
+  m1_price      Float?         @db.Float
+  w1_price      Float?         @db.Float
+  y1_price      Float?         @db.Float
+  username      String?        @unique(map: "post_index_3") @db.VarChar(255)
+
+  @@index([user_id])
+}
+
+model user {
+  id              Int      @id @default(autoincrement()) @db.UnsignedInt
+  created_at      DateTime @default(now()) @db.Timestamp(0)
+  lifetime_profit Float    @default(0) @db.Float
+  username        String   @unique
+}
+
+enum post_sentiment {
+  buy
+  sell
+}
