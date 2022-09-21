@@ -12,7 +12,20 @@ import '@/styles/colors.css';
  */
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60000 * 5,
+            refetchOnReconnect: false,
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+            retry: false,
+          },
+        },
+      })
+  );
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehyratedState}>

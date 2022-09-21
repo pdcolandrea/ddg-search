@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Router from 'next/router';
 import * as React from 'react';
 import { ChangeEvent, useState } from 'react';
 
@@ -19,7 +20,7 @@ export default function SearchPage() {
   };
 
   const onSearchIconClicked = () => {
-    console.log('searching for ', searchQuery);
+    Router.push(`/u/${searchQuery}`);
   };
 
   const onCloseIconClicked = () => {
@@ -47,7 +48,7 @@ export default function SearchPage() {
               {searchQuery.length >= 1 && (
                 <div
                   onClick={onCloseIconClicked}
-                  className='absolute right-10  flex h-full w-14 items-center justify-center'
+                  className='absolute right-10 flex h-full w-14 items-center justify-center'
                 >
                   <CloseIcon />
                 </div>

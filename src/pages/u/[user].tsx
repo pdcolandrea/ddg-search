@@ -1,10 +1,14 @@
-import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 
+import { wAPI } from '@/lib/apiClient';
+
+import Layout from '@/components/layout/Layout';
+import Seo from '@/components/Seo';
+
 export const getUser = async (username: string) => {
-  const response = await axios.get(`/api/user/${username}`);
+  const response = await wAPI.get(`/api/user/${username}`);
   return response.data;
 };
 
@@ -42,9 +46,15 @@ export default function User() {
   );
 
   return (
-    <div>
-      <h1>User</h1>
-      <p>{JSON.stringify(data)}</p>
-    </div>
+    <Layout>
+      <Seo title={`Stats | ${username}`} />
+
+      <main>
+        <div className='h-screen w-screen bg-mainbg'>
+          <h1>User</h1>
+          <p>{JSON.stringify(data)}</p>
+        </div>
+      </main>
+    </Layout>
   );
 }
