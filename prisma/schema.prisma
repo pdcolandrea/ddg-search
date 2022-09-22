@@ -1,10 +1,22 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+
+model user {
+  id              Int      @id @default(autoincrement()) @db.UnsignedInt
+  created_at      DateTime @default(now()) @db.Timestamp(0)
+  lifetime_profit Float    @default(0) @db.Float
+  username        String   @unique
+
+  posts           post[]
 }
 
 model post {
@@ -12,6 +24,7 @@ model post {
   created_at    DateTime       @default(now()) @db.Timestamp(0)
   slug          String         @db.VarChar(255)
   user_id       Int
+  user          user           @relation(fields: [user_id], references: [id])
   current_price Float          @db.Float
   pair          String         @db.VarChar(12)
   sentiment     post_sentiment
@@ -22,13 +35,6 @@ model post {
   username      String?        @unique(map: "post_index_3") @db.VarChar(255)
 
   @@index([user_id])
-}
-
-model user {
-  id              Int      @id @default(autoincrement()) @db.UnsignedInt
-  created_at      DateTime @default(now()) @db.Timestamp(0)
-  lifetime_profit Float    @default(0) @db.Float
-  username        String   @unique
 }
 
 enum post_sentiment {

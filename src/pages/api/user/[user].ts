@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '@/lib/prisma';
 import { attemptToFindData } from '@/lib/tv_data';
+import { IPageDataBase } from '@/lib/types';
 
 const attemptToFindPosts = async (username: string) =>
   prisma.post.findMany({
@@ -13,6 +14,27 @@ const attemptToFindPosts = async (username: string) =>
       id: 'asc',
     },
   });
+
+export async function insertNewPost(user: IPageDataBase) {
+  return await prisma.post.create({
+    data: {
+      user: {
+        connectOrCreate: {
+          where: {
+            username: user.username,
+          },
+          create: {
+            username: user.username,
+          },
+        },
+      },
+      pair: user.ticker,
+      slug: user.slug,
+      sentiment: user.sentiment,
+      current_price: 0,
+    },
+  });
+}
 
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -55,26 +77,23 @@ export default async function handler(
 
   // Attempt to find user in db
   const posts = await attemptToFindPosts(user);
+
   if (posts.length === 0) {
-    // pull user info
+    // never seen, scrape
+    const userInfo = await attemptToFindData(user);
+    console.log(userInfo);
+    if (!userInfo) {
+      // TODO: Redirect?
+      return res.status(400).send({ status: 'Error', code: 'NO_USER_FOUND' });
+    }
+    res.status(200).send(userInfo);
+
+    // send to db
+    return Promise.allSettled(
+      userInfo.map(async (user) => await insertNewPost(user))
+    );
   }
-  const userInfo = await attemptToFindData(user);
-  console.log(userInfo);
 
-  if (!userInfo) {
-    // TODO: Redirect?
-    return res.status(400).send({ status: 'Error', code: 'NO_USER_FOUND' });
-  }
-
-  // return to client
-  res.status(200).send(userInfo);
-
-  // send to db
-
-  // ==> If found w/ outdated info:
-  // > Return data w/ appended header to fetch more on client
-  // > Else return data
-  // ==> If not found, scrape, add to db, add cache headers
-
-  return res.status(400).send('Hello');
+  // Found
+  return res.status(200).send(posts);
 }

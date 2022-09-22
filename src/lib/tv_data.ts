@@ -1,12 +1,15 @@
+import { post_sentiment } from '@prisma/client';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+
+import { IPageDataBase, TPageData } from '@/lib/types';
 
 const PAGE_LIMIT = 1;
 export async function attemptToFindData(
   username: string,
-  pageData = [],
+  pageData: TPageData = [],
   toPage = 0
-) {
+): Promise<TPageData> {
   const TV_URL = 'https://www.tradingview.com';
   const pageParam = toPage === 0 ? '' : `page-${toPage}`;
   const page = await axios.get(`${TV_URL}/u/${username}/${pageParam}`);
@@ -45,10 +48,11 @@ export async function attemptToFindData(
       const data = {
         ticker: ticker,
         username: user,
-        sentiment: label,
+        sentiment: label as post_sentiment,
         slug: slug,
         postTime: realTime,
-      };
+      } as IPageDataBase;
+
       pageData.push(data);
     });
 
