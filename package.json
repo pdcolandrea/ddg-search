@@ -18,11 +18,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@heroicons/react": "v1",
     "@prisma/client": "4.2.1",
+    "@tremor/react": "^1.0.2",
     "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^1.2.1",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.5",
     "next": "^12.2.5",
     "prisma": "4.2.1",
     "react": "^18.2.0",

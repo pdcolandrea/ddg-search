@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 
 import '@/styles/globals.css';
-// !STARTERCONF This is for demo purposes, remove @/styles/colors.css import immediately
-import '@/styles/colors.css';
+import '@tremor/react/dist/esm/tremor.css';
 
 /**
  * !STARTERCONF info
