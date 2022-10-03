@@ -2,7 +2,7 @@ import Cors from 'cors';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '@/lib/prisma';
-import { attemptToFindData } from '@/lib/tv_data';
+import { attemptToFindData } from '@/lib/tvData';
 import { IPageDataBase } from '@/lib/types';
 
 const attemptToFindPosts = async (username: string) =>
